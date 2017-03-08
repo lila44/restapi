@@ -1,0 +1,9 @@
+cyworld:
+# TEST DATA  
+  test:
+    path   : testdata
+# SWAGGER    
+  swagger:
+    name   : REST API
+    desc   : REST API 목록 
+    version: v0.1

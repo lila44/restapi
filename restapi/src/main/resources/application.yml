@@ -1,0 +1,91 @@
+# 1. 참고
+#     - http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# 2. 환경별 서버 기동(이하 JAVA 옵션에 추가) 
+#     - tomcat : catalina.xxx --> -Dspring.profiles.active={locl|test|stag|prod}
+# 3. 설명 
+#     - server:port                          포트
+#     - logging:config                       로그 설정 경로
+#     - banner:location                      배너 설정 경로(http://patorjk.com/software/taag/#p=display&h=0&v=0&f=Big&t=CYWROLD)
+#     - spring:profiles                      환경 구분 식별자(locl|test|stag|prod)
+#     - spring:datasource:driver-class-name  JDBC DRIVDER(LOCL-LOG4SQL)
+#     - spring:datasource:url                JDBC URL
+#     - spring:datasource:username           DATABASE ID
+#     - spring:datasource:password           DATABASE PASSWORD
+# 4. 서버
+#     - test : http://111.111.111.111/swagger-ui.html
+#     - stag : http://111.111.111.111/swagger-ui.html
+#     - prod : http://111.111.111.111/swagger-ui.html
+
+server:
+  port    : 80  
+  
+################################################ LOCAL(개인 PC) ###################################################
+---
+logging: 
+  config  : classpath:config/logback/locl-logback.xml
+banner:
+  location: classpath:config/banner/locl-banner.txt  
+spring:
+  datasource: 
+    driver-class-name: org.h2.Driver 
+    url              : jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE
+    username         : sa
+    password         : 
+
+# H2    
+#   driver-class-name: org.h2.Driver
+#   url              : jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE
+#   username         : sa
+#   password         : 
+
+# MYSQL
+#   driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy  
+#   url              : jdbc:log4jdbc:mysql://111.111.111.111:3306/cybill?characterEncoding=utf8
+#   username         : 111111
+#   password         : 111111
+
+
+################################################ TEST(개발 서버) ###################################################
+---
+logging: 
+  config  : classpath:config/logback/test-logback.xml
+banner:
+  location: classpath:config/banner/test-banner.txt    
+spring:
+  profiles: test
+  datasource: 
+    driver-class-name: com.mysql.jdbc.Driver
+    url              : jdbc:mysql://111.111.111.111:3306/cybill?characterEncoding=utf8
+    username         : 111111
+    password         : 111111
+  
+  
+################################################ STAG(스테이징 서버) ################################################
+---
+logging: 
+  config  : classpath:config/logback/stag-logback.xml
+banner:
+  location: classpath:config/banner/stag-banner.txt 
+spring:
+  profiles: stag
+  datasource: 
+    driver-class-name: com.mysql.jdbc.Driver
+    url              : jdbc:mysql://111.111.111.111:3306/cybill?characterEncoding=utf8
+    username         : 111111
+    password         : 111111      
+  
+
+################################################ PROD(운영 서버) ###################################################
+---
+logging: 
+  config  : classpath:config/logback/prod-logback.xml
+banner:
+  location: classpath:config/banner/prod-banner.txt
+spring:
+  profiles: prod
+  datasource: 
+    driver-class-name: com.mysql.jdbc.Driver
+    url              : jdbc:mysql://111.111.111.111:3306/cybill?characterEncoding=utf8
+    username         : 111111
+    password         : 111111
+    
